@@ -1,0 +1,69 @@
+name: fork数据集离线操作
+
+tasks:
+  fetch-content-set-config:
+    container:
+      image: registry.graviti.cn/pipeline/fetch-config:latest
+      command: [ sh, -c ]
+      args: [ "./export-config --app-name=ContentStore --filepath=/tmp/config.yaml" ]
+      env:
+        - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
+        - { name: "ENVIRONMENT", value: "dev" }
+    outputs:
+      artifacts:
+        - name: config-file
+          path: /tmp/config.yaml
+
+  fetch-label-set-config:
+    container:
+      image: registry.graviti.cn/pipeline/fetch-config:latest
+      command: [ sh, -c ]
+      args: [ "./export-config --app-name=LabelStore --filepath=/tmp/config.yaml" ]
+      env:
+        - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
+        - { name: "ENVIRONMENT", value: "dev" }
+    outputs:
+      artifacts:
+        - name: config-file
+          path: /tmp/config.yaml
+
+  fetch-dataset-config:
+    container:
+      image: registry.graviti.cn/pipeline/fetch-config:latest
+      command: [ sh, -c ]
+      args: [ "./export-config --app-name=Dataset --filepath=/tmp/config.yaml" ]
+      env:
+        - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
+        - { name: "ENVIRONMENT", value: "dev" }
+    outputs:
+      artifacts:
+        - name: config-file
+          path: /tmp/config.yaml
+
+  fork-dataset:
+    dependencies:
+      - fetch-content-set-config
+      - fetch-label-set-config
+      - fetch-dataset-config
+    container:
+      image: registry.graviti.cn/pipeline/fork-dataset:latest
+      command: [ sh, -c ]
+      args: [ "./fork-dataset /mnt/configs" ]
+      env:
+        - { name: "ENVIRONMENT", value: "dev" }
+    inputs:
+      artifacts:
+        - name: content-store-config
+          path: /mnt/configs/ContentStore.yaml
+        - name: label-store-config
+          path: /mnt/configs/LabelStore.yaml
+        - name: dataset-config
+          path: /mnt/configs/Dataset.yaml
+    arguments:
+      artifacts:
+        - name: content-store-config
+          from: "{{tasks.fetch-content-store-config.outputs.artifacts.config-file}}"
+        - name: label-store-config
+          from: "{{tasks.fetch-label-store-config.outputs.artifacts.config-file}}"
+        - name: dataset-config
+          from: "{{tasks.fetch-dataset-config.outputs.artifacts.config-file}}"
