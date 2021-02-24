@@ -1,4 +1,4 @@
-name: fork数据集离线操作
+name: fork-dataset
 
 tasks:
   fetch-content-set-config:
