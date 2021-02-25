@@ -5,7 +5,7 @@ tasks:
     container:
       image: registry.graviti.cn/pipeline/fetch-config:46482a5d-20210224
       command: [ sh, -c ]
-      args: [ "./export-config --app-name=ContentStore --filepath=/tmp/config.yaml" ]
+      args: [ "./fetch-config --app-name=ContentStore --output-file=/tmp/config.yaml" ]
       env:
         - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
         - { name: "ENVIRONMENT", value: "dev" }
@@ -18,7 +18,7 @@ tasks:
     container:
       image: registry.graviti.cn/pipeline/fetch-config:46482a5d-20210224
       command: [ sh, -c ]
-      args: [ "./export-config --app-name=LabelStore --filepath=/tmp/config.yaml" ]
+      args: [ "./fetch-config --app-name=LabelStore --output-file=/tmp/config.yaml" ]
       env:
         - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
         - { name: "ENVIRONMENT", value: "dev" }
@@ -31,7 +31,7 @@ tasks:
     container:
       image: registry.graviti.cn/pipeline/fetch-config:46482a5d-20210224
       command: [ sh, -c ]
-      args: [ "./export-config --app-name=Dataset --filepath=/tmp/config.yaml" ]
+      args: [ "./fetch-config --app-name=Dataset --output-file=/tmp/config.yaml" ]
       env:
         - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
         - { name: "ENVIRONMENT", value: "dev" }
@@ -54,11 +54,11 @@ tasks:
     inputs:
       artifacts:
         - name: content-store-config
-          path: /mnt/configs/ContentStore.yaml
+          path: /mnt/configs/ContentStore.dev.yaml
         - name: label-store-config
-          path: /mnt/configs/LabelStore.yaml
+          path: /mnt/configs/LabelStore.dev.yaml
         - name: dataset-config
-          path: /mnt/configs/Dataset.yaml
+          path: /mnt/configs/Dataset.dev.yaml
     arguments:
       artifacts:
         - name: content-store-config
