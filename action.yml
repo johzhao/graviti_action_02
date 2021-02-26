@@ -1,5 +1,8 @@
 name: fork-dataset
 
+imagePullSecrets:
+  - name: harbor-registry
+
 tasks:
   fetch-content-set-config:
     container:
