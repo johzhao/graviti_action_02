@@ -8,7 +8,7 @@ tasks:
       args: [ "./fetch-config --app-name=ContentStore --output-file=/tmp/config.yaml" ]
       env:
         - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "ENVIRONMENT", value: "fat" }
     outputs:
       artifacts:
         - name: config-file
@@ -21,7 +21,7 @@ tasks:
       args: [ "./fetch-config --app-name=LabelStore --output-file=/tmp/config.yaml" ]
       env:
         - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "ENVIRONMENT", value: "fat" }
     outputs:
       artifacts:
         - name: config-file
@@ -34,7 +34,7 @@ tasks:
       args: [ "./fetch-config --app-name=Dataset --output-file=/tmp/config.yaml" ]
       env:
         - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "ENVIRONMENT", value: "fat" }
     outputs:
       artifacts:
         - name: config-file
@@ -50,15 +50,15 @@ tasks:
       command: [ sh, -c ]
       args: [ "./fork-dataset /mnt/configs" ]
       env:
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "ENVIRONMENT", value: "fat" }
     inputs:
       artifacts:
         - name: content-store-config
-          path: /mnt/configs/ContentStore.dev.yaml
+          path: /mnt/configs/ContentStore.fat.yaml
         - name: label-store-config
-          path: /mnt/configs/LabelStore.dev.yaml
+          path: /mnt/configs/LabelStore.fat.yaml
         - name: dataset-config
-          path: /mnt/configs/Dataset.dev.yaml
+          path: /mnt/configs/Dataset.fat.yaml
     arguments:
       artifacts:
         - name: content-store-config
