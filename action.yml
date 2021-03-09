@@ -1,12 +1,12 @@
 name: fork-dataset
 
 imagePullSecrets:
-  - name: harbor-registry
+  - name: aws-ecr-secret
 
 tasks:
   fetch-content-set-config:
     container:
-      image: registry.graviti.cn/pipeline/fetch-config:46482a5d-20210224
+      image: 016353724114.dkr.ecr.us-west-1.amazonaws.com/pipeline:fetch-config-46482a5d-20210224
       command: [ sh, -c ]
       args: [ "./fetch-config --app-name=ContentStore --output-file=/tmp/config.yaml" ]
       env:
@@ -19,7 +19,7 @@ tasks:
 
   fetch-label-set-config:
     container:
-      image: registry.graviti.cn/pipeline/fetch-config:46482a5d-20210224
+      image: 016353724114.dkr.ecr.us-west-1.amazonaws.com/pipeline:fetch-config-46482a5d-20210224
       command: [ sh, -c ]
       args: [ "./fetch-config --app-name=LabelStore --output-file=/tmp/config.yaml" ]
       env:
@@ -32,7 +32,7 @@ tasks:
 
   fetch-dataset-config:
     container:
-      image: registry.graviti.cn/pipeline/fetch-config:46482a5d-20210224
+      image: 016353724114.dkr.ecr.us-west-1.amazonaws.com/pipeline:fetch-config-46482a5d-20210224
       command: [ sh, -c ]
       args: [ "./fetch-config --app-name=Dataset --output-file=/tmp/config.yaml" ]
       env:
@@ -49,7 +49,7 @@ tasks:
       - fetch-label-set-config
       - fetch-dataset-config
     container:
-      image: registry.graviti.cn/pipeline/fork-dataset:46482a5d-20210225
+      image: 016353724114.dkr.ecr.us-west-1.amazonaws.com/pipeline:fork-dataset-46482a5d-20210225
       command: [ sh, -c ]
       args: [ "./fork-dataset /mnt/configs" ]
       env:
