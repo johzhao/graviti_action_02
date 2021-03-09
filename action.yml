@@ -10,8 +10,8 @@ tasks:
       command: [ sh, -c ]
       args: [ "./fetch-config --app-name=ContentStore --output-file=/tmp/config.yaml" ]
       env:
-        - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "APOLLO_ADDR", value: "10.19.2.220:8080" }
+        - { name: "ENVIRONMENT", value: "fat" }
     outputs:
       artifacts:
         - name: config-file
@@ -23,8 +23,8 @@ tasks:
       command: [ sh, -c ]
       args: [ "./fetch-config --app-name=LabelStore --output-file=/tmp/config.yaml" ]
       env:
-        - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "APOLLO_ADDR", value: "10.19.2.220:8080" }
+        - { name: "ENVIRONMENT", value: "fat" }
     outputs:
       artifacts:
         - name: config-file
@@ -36,8 +36,8 @@ tasks:
       command: [ sh, -c ]
       args: [ "./fetch-config --app-name=Dataset --output-file=/tmp/config.yaml" ]
       env:
-        - { name: "APOLLO_ADDR", value: "172.19.50.234:8080" }
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "APOLLO_ADDR", value: "10.19.2.220:8080" }
+        - { name: "ENVIRONMENT", value: "fat" }
     outputs:
       artifacts:
         - name: config-file
@@ -53,7 +53,7 @@ tasks:
       command: [ sh, -c ]
       args: [ "./fork-dataset /mnt/configs" ]
       env:
-        - { name: "ENVIRONMENT", value: "dev" }
+        - { name: "ENVIRONMENT", value: "fat" }
     inputs:
       artifacts:
         - name: content-store-config
